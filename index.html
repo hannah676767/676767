@@ -129,7 +129,6 @@
 </head>
 <body>
 
-  <!-- Single Profile -->
   <div class="profile">
     <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Beach Sunset">
     <div class="bio">🏐 I play volleyball on Smash 13's <br> 🎓 I go to Dexter Southfield</div>
@@ -139,4 +138,90 @@
       <div class="stat">
         <div class="number">312</div>
         <div class="label">Following</div>
-      </di
+      </div>
+      <div class="stat">
+        <div class="number" id="followers"></div>
+        <div class="label">Followers</div>
+      </div>
+      <div class="stat">
+        <div class="number">1.3M</div>
+        <div class="label">Likes</div>
+      </div>
+    </div>
+
+    <button class="follow-btn" id="followBtn">Follow</button>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('videos')">Videos</div>
+    <div class="tab" onclick="showTab('liked')">Liked</div>
+  </div>
+
+  <div id="videos" class="content active">
+    <div class="video-grid">
+      <div class="video">Video 1</div>
+      <div class="video">Video 2</div>
+      <div class="video">Video 3</div>
+    </div>
+  </div>
+
+  <div id="liked" class="content">
+    <div class="video-grid">
+      <div class="video">❤️ Liked 1</div>
+      <div class="video">❤️ Liked 2</div>
+      <div class="video">❤️ Liked 3</div>
+    </div>
+  </div>
+
+  <script>
+    // Helper: Format numbers TikTok-style
+    function formatNumber(num) {
+      if (num >= 1000000) {
+        return (num / 1000000).toFixed(1).replace(/\.0$/, '') + "M";
+      }
+      if (num >= 1000) {
+        return (num / 1000).toFixed(1).replace(/\.0$/, '') + "K";
+      }
+      return num.toString();
+    }
+
+    // Elements
+    const followBtn = document.getElementById("followBtn");
+    const followersEl = document.getElementById("followers");
+
+    // Starting follower count
+    let followersCount = 17300;
+    let isFollowing = false;
+
+    // Initialize display
+    followersEl.textContent = formatNumber(followersCount);
+
+    // Toggle Follow Button
+    followBtn.addEventListener("click", () => {
+      if (!isFollowing) {
+        followersCount++;
+        followBtn.innerText = "Unfollow";
+        followBtn.style.backgroundColor = "#ccc";
+        followBtn.style.color = "#000";
+        isFollowing = true;
+      } else {
+        followersCount--;
+        followBtn.innerText = "Follow";
+        followBtn.style.backgroundColor = "#ff66b2";
+        followBtn.style.color = "#fff";
+        isFollowing = false;
+      }
+      followersEl.textContent = formatNumber(followersCount);
+    });
+
+    // Tab switching
+    function showTab(tabName) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
+      document.querySelector(`.tab[onclick="showTab('${tabName}')"]`).classList.add('active');
+      document.getElementById(tabName).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
